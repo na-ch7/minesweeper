@@ -1,4 +1,3 @@
-import {group} from 'console';
 import {getNeighbours} from '../../src/utils/createGrid';
 
 function expand(row, col, grid) {
@@ -50,6 +49,12 @@ export function gridReducer(state, action) {
   const {type, row, col} = action;
 
   switch (type) {
+    case 'start_game': {
+      return {
+        ...state,
+        isGameStarted: true,
+      };
+    }
     case 'flipped': {
       if (state.grid[row][col].isMine) {
         return {
@@ -67,6 +72,12 @@ export function gridReducer(state, action) {
           grid: flipTile(row, col, state.grid),
         };
       }
+    }
+    case 'win_game': {
+      return {
+        ...state,
+        hasWon: true,
+      };
     }
   }
 }
