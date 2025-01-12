@@ -12,33 +12,31 @@ export default function Grid() {
     isGameStarted: false,
     isGameOver: false,
     hasWon: false,
+    isMineInitialized: false,
   });
 
   function handlePress(row, col) {
     if (!gameState.isGameStarted) {
-      dispatch({ type: 'start_game' });
+      dispatch({type: 'start_game'});
     }
-    dispatch({ type: 'flipped', row, col });
+    if (!gameState.isGridInitialized) {
+      dispatch({type: 'initialize_mines', row, col});
+    }
+    dispatch({type: 'flipped', row, col});
   }
 
   useEffect(() => {
     if (!gameState.isGameOver && gameState.isGameStarted) {
-      const unflippedSafeTiles = gameState.grid.flat().filter(
-        tile => !tile.isFlipped && !tile.isMine
-      );
+      const unflippedSafeTiles = gameState.grid.flat().filter(tile => !tile.isFlipped && !tile.isMine);
       if (unflippedSafeTiles.length === 0) {
-        dispatch({ type: 'win_game' });
+        dispatch({type: 'win_game'});
       }
     }
   }, [gameState.grid]);
 
   return (
     <View style={styles.container}>
-      <Timer 
-        isGameStarted={gameState.isGameStarted}
-        isGameOver={gameState.isGameOver}
-        hasWon={gameState.hasWon}
-      />
+      <Timer isGameStarted={gameState.isGameStarted} isGameOver={gameState.isGameOver} hasWon={gameState.hasWon} />
       {gameState.grid.map((row, rowIdx) => (
         <View key={rowIdx} style={styles.row}>
           {row.map((tile, tileIdx) => (

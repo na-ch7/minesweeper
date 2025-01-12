@@ -1,4 +1,5 @@
-import {getNeighbours} from '../../src/utils/createGrid';
+import {getNeighbours, initializeMines} from '../../src/utils/createGrid';
+import {MINES} from '../constants';
 
 function expand(row, col, grid) {
   const newGrid = grid.slice();
@@ -55,11 +56,21 @@ export function gridReducer(state, action) {
         isGameStarted: true,
       };
     }
+    case 'initialize_mines': {
+      const initializedGrid = initializeMines(state.grid, MINES, row, col);
+      return {
+        ...state,
+        grid: initializedGrid,
+        isGridInitialized: true,
+      };
+    }
     case 'flipped': {
+      if (!state.isGridInitialized) return state;
       if (state.grid[row][col].isMine) {
         return {
           ...state,
           grid: flipAll(state.grid),
+          isGameOver: true,
         };
       } else if (state.grid[row][col].value === 0) {
         return {

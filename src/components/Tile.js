@@ -11,8 +11,8 @@ export default function Tile({row, col, value, isMine, isFlipped, isFlagged, han
 
 const styles = StyleSheet.create({
   container: {
-    width: 30,
-    height: 30,
+    width: 35,
+    height: 35,
     backgroundColor: '#4e43fe',
     borderWidth: 1,
     borderColor: 'white',

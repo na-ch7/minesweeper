@@ -9,23 +9,25 @@ export function createGrid(height, width, mines) {
     }
     grid.push(newRow);
   }
-  setMines(grid, mines);
-  setValue(grid);
-
   return grid;
 }
 
-function setMines(grid, mines) {
+export function initializeMines(grid, mines, safeRow, safeCol) {
+  const newGrid = grid.slice();
+  const safeTiles = getNeighbours(newGrid, safeRow, safeCol).concat([[safeRow, safeCol]]);
+
   let minesToInsert = mines;
   while (minesToInsert > 0) {
-    let row = Math.floor(Math.random() * grid.length);
-    let col = Math.floor(Math.random() * grid[0].length);
+    let row = Math.floor(Math.random() * newGrid.length);
+    let col = Math.floor(Math.random() * newGrid[0].length);
 
-    if (!grid[row][col].isMine) {
+    if (!newGrid[row][col].isMine && !safeTiles.some(([r, c]) => r === row && c === col)) {
       grid[row][col].isMine = true;
       minesToInsert--;
     }
   }
+  setValue(newGrid);
+  return newGrid;
 }
 
 function setValue(grid) {

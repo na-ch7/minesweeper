@@ -1,3 +1,3 @@
-export const GRID_HEIGHT = 18;
-export const GRID_WIDTH = 12;
-export const MINES = 40;
+export const GRID_HEIGHT = 12;
+export const GRID_WIDTH = 10;
+export const MINES = 24;

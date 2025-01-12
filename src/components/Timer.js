@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, StyleSheet} from 'react-native';
 
-const Timer = ({ isGameStarted, isGameOver, hasWon }) => {
+const Timer = ({isGameStarted, isGameOver, hasWon}) => {
   const [time, setTime] = useState(0);
   const [timerInterval, setTimerInterval] = useState(null);
 
@@ -24,17 +24,13 @@ const Timer = ({ isGameStarted, isGameOver, hasWon }) => {
     };
   }, [isGameStarted, isGameOver, hasWon]);
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  return (
-    <Text style={styles.timer}>
-      {formatTime(time)}
-    </Text>
-  );
+  return <Text style={styles.timer}>{formatTime(time)}</Text>;
 };
 
 const styles = StyleSheet.create({
